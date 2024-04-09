@@ -19,6 +19,7 @@ class Controller:
             return
         else:
             studenti = self._model.gets(name)
+            self._view.txt_result.controls.append(ft.Text(f'Ci sono {len(studenti)} al corso:',color='red',size=20))
             for i in studenti:
                 self._view.txt_result.controls.append(ft.Text(i))
         self._view.update_page()
@@ -32,8 +33,8 @@ class Controller:
                 self._view.create_alert("scrivere una matricola")
                 return
             else:
-                n,c = self._model.searchstudent(matricola)
-                if n != None and c != None:
+                b,n,c = self._model.searchstudent(matricola)
+                if b==True:
                     self._view.nome.value=n
                     self._view.cognome.value=c
                 else:
@@ -41,5 +42,24 @@ class Controller:
             self._view.update_page()
         except ValueError:
             self._view.matricola.value = None
-            self._view.txt_result.controls.append(ft.Text(f'Inserire un numero', color='red', size=15))
+            self._view.txt_result.controls.append(ft.Text(f'Inserire una matricola numerica', color='red', size=15))
+            self._view.update_page()
+
+    def cercacorso(self,e):
+        matricola = self._view.matricola.value
+        self._view.matricola.value=None
+        try:
+            int(matricola)
+            b,corsi = self._model.inside(int(matricola))
+            if b ==True:
+                self._view.txt_result.controls.append(ft.Text(f'Studente con matricola {matricola} presente ed iscritto a tali corsi:'))
+                for i in corsi:
+                    self._view.txt_result.controls.append(ft.Text(i))
+            else:
+                self._view.txt_result.controls.append(ft.Text(f'Studente con matricola {matricola} non presente'))
+            self._view.update_page()
+
+        except ValueError:
+            self._view.matricola.value = None
+            self._view.txt_result.controls.append(ft.Text(f'Inserire una matricola numerica', color='red', size=15))
             self._view.update_page()

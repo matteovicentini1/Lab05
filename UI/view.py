@@ -40,7 +40,7 @@ class View(ft.UserControl):
         self._page.controls.append(r2)
 
         self.btncercast= ft.ElevatedButton(text='Cerca Studente',on_click=self._controller.cercastudente)
-        self.btncercacors = ft.ElevatedButton(text='Cerca Corso')
+        self.btncercacors = ft.ElevatedButton(text='Cerca Corso',on_click=self._controller.cercacorso)
         self.btniscrivi = ft.ElevatedButton(text='Iscrivi')
 
         r3 = ft.Row([self.btncercast,self.btncercacors, self.btniscrivi],alignment=ft.MainAxisAlignment.CENTER)

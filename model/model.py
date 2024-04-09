@@ -23,5 +23,24 @@ class Model:
     def searchstudent(self,mat):
         for i in self.studenti:
             if int(i.matricola) == int(mat):
-                return i.nome,i.cognome
+                return True,i.nome,i.cognome
+        return False,'f','f'
+
+    def inside(self,matr):
+        mat=[]
+        for i in self.accoppiamenti:
+            mat.append(int(i[0]))
+        if matr in mat:
+            corsi=[]
+            cod=[]
+            for i in self.accoppiamenti:
+                if int(i[0])==matr:
+                    cod.append(i[1])
+            for i in self.corsi:
+                if i.codice in cod:
+                    corsi.append(i)
+            return True, corsi
+
+        else:
+            return False,[]
 
