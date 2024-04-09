@@ -63,3 +63,25 @@ class Controller:
             self._view.matricola.value = None
             self._view.txt_result.controls.append(ft.Text(f'Inserire una matricola numerica', color='red', size=15))
             self._view.update_page()
+
+    def iscrivi(self,e):
+        matricola = self._view.matricola.value
+        cod = self._view.txt_name.value.split(" ")[-1]
+        try:
+            b = self._model.controlloesistenza(int(matricola))
+            b2 = self._model.controlloacoppiamento(int(matricola))
+            if b==True and b2 ==True:
+                self._model.put(matricola,cod)
+                self._view.txt_result.controls.append(ft.Text(f'Matricola aggiunta al corso', color='red', size=15))
+            elif b==True and b2==False:
+                self._view.txt_result.controls.append(ft.Text(f'Matricola già appartenente al corso', color='red', size=15))
+            elif b == False and b2 == True:
+                self._view.txt_result.controls.append(ft.Text(f'Matricola Inesistente', color='red', size=15))
+            self._view.update_page()
+
+        except ValueError:
+            self._view.matricola.value = None
+            self._view.txt_result.controls.append(ft.Text(f'Inserire una matricola numerica', color='red', size=15))
+            self._view.update_page()
+
+

@@ -44,3 +44,37 @@ class Model:
         else:
             return False,[]
 
+    def controlloesistenza(self,matricola):
+        mtot=[]
+        for i in self.studenti:
+            mtot.append(int(i.matricola))
+        if matricola in mtot:
+            return True
+        else:
+            return False
+
+    def controlloacoppiamento(self,matricola):
+        mtot = []
+        for i in self.accoppiamenti:
+            mtot.append(int(i[0]))
+        if matricola in mtot:
+            return True
+        else:
+            return False
+
+    def cercacod(self,cod):
+        for i in self.corsi:
+            if f'({i.codice})' == cod:
+                return i
+
+    def cercastudente(self,matricola):
+        for i in self.studenti:
+            if int(i.matricola)== int(matricola):
+                return i
+
+
+    def put(self,matricola,cod):
+        codice = self.cercacod(cod)
+        stud = self.cercastudente(matricola)
+        dc.putcoppia(stud.matricola,codice.codice)
+        self.accoppiamenti.append([stud.matricola,codice.codice])
